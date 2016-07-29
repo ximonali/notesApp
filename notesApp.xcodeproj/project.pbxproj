@@ -12,6 +12,8 @@
 		2C94B73F1D4AFBDF00374121 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C94B73D1D4AFBDF00374121 /* Main.storyboard */; };
 		2C94B7411D4AFBDF00374121 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C94B7401D4AFBDF00374121 /* Assets.xcassets */; };
 		2C94B7441D4AFBDF00374121 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C94B7421D4AFBDF00374121 /* LaunchScreen.storyboard */; };
+		2C94B74C1D4B030D00374121 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C94B74B1D4B030D00374121 /* NotesViewController.swift */; };
+		2C94B74E1D4B035000374121 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C94B74D1D4B035000374121 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		2C94B7401D4AFBDF00374121 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C94B7431D4AFBDF00374121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C94B7451D4AFBDF00374121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C94B74B1D4B030D00374121 /* NotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		2C94B74D1D4B035000374121 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				2C94B7401D4AFBDF00374121 /* Assets.xcassets */,
 				2C94B7421D4AFBDF00374121 /* LaunchScreen.storyboard */,
 				2C94B7451D4AFBDF00374121 /* Info.plist */,
+				2C94B74B1D4B030D00374121 /* NotesViewController.swift */,
+				2C94B74D1D4B035000374121 /* MapViewController.swift */,
 			);
 			path = notesApp;
 			sourceTree = "<group>";
@@ -137,6 +143,8 @@
 			files = (
 				2C94B73C1D4AFBDF00374121 /* ViewController.swift in Sources */,
 				2C94B73A1D4AFBDF00374121 /* AppDelegate.swift in Sources */,
+				2C94B74C1D4B030D00374121 /* NotesViewController.swift in Sources */,
+				2C94B74E1D4B035000374121 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
