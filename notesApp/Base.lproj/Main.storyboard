@@ -93,40 +93,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2e3-ay-4IN">
-                                <rect key="frame" x="24" y="173" width="326" height="158"/>
+                                <rect key="frame" x="24" y="167" width="326" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWJ-4O-aE8">
-                                <rect key="frame" x="89" y="559" width="196" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.43342952350164166" blue="0.21076466420605144" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Save"/>
-                                <connections>
-                                    <action selector="btnSave:" destination="Lia-cb-YFd" eventType="touchUpInside" id="qle-VY-wKd"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kDs-yw-lcm">
-                                <rect key="frame" x="67" y="502" width="88" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.43342952350000002" blue="0.21076466420000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Take Picture"/>
-                                <connections>
-                                    <action selector="btnAddPicture:" destination="Lia-cb-YFd" eventType="touchUpInside" id="uAi-8d-Gha"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUT-SX-8sw">
-                                <rect key="frame" x="220" y="502" width="87" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.43342952350000002" blue="0.21076466420000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Select"/>
-                                <connections>
-                                    <action selector="btnAddPicture:" destination="Lia-cb-YFd" eventType="touchUpInside" id="Ndq-Ce-ciW"/>
-                                    <action selector="selectPicture:" destination="Lia-cb-YFd" eventType="touchUpInside" id="bY7-Cm-tBH"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Note Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OFb-ru-tbC">
                                 <rect key="frame" x="140" y="85" width="94" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -139,10 +111,38 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xFD-9A-Inm">
-                                <rect key="frame" x="67" y="352" width="240" height="128"/>
+                                <rect key="frame" x="67" y="295" width="240" height="128"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWJ-4O-aE8">
+                                <rect key="frame" x="89" y="484" width="196" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.43342952350164166" blue="0.21076466420605144" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="btnSave:" destination="Lia-cb-YFd" eventType="touchUpInside" id="qle-VY-wKd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kDs-yw-lcm">
+                                <rect key="frame" x="67" y="431" width="88" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.43342952350000002" blue="0.21076466420000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Take Picture"/>
+                                <connections>
+                                    <action selector="btnAddPicture:" destination="Lia-cb-YFd" eventType="touchUpInside" id="uAi-8d-Gha"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUT-SX-8sw">
+                                <rect key="frame" x="220" y="431" width="87" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.43342952350000002" blue="0.21076466420000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Select"/>
+                                <connections>
+                                    <action selector="btnAddPicture:" destination="Lia-cb-YFd" eventType="touchUpInside" id="Ndq-Ce-ciW"/>
+                                    <action selector="selectPicture:" destination="Lia-cb-YFd" eventType="touchUpInside" id="bY7-Cm-tBH"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="826-sC-6xY">
-                                <rect key="frame" x="178" y="506" width="19" height="21"/>
+                                <rect key="frame" x="178" y="435" width="19" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -150,8 +150,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="imageView" destination="xFD-9A-Inm" id="yqr-jk-MRk"/>
+                        <outlet property="pickMyPicture" destination="yUT-SX-8sw" id="pZd-Ve-zgz"/>
                         <outlet property="takePictureButton" destination="kDs-yw-lcm" id="aqS-Ka-aMT"/>
                         <outlet property="txtTittle" destination="Xls-KN-bQA" id="Cfn-6i-Uyj"/>
                     </connections>

@@ -17,25 +17,53 @@ UINavigationControllerDelegate {
     
     
     //------ Vars for camera
+    var imagePicker = UIImagePickerController()
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var takePictureButton: UIButton!
-    var newMedia: Bool?
+    @IBOutlet weak var pickMyPicture: UIButton!
 
-    //------
+
     
     
     @IBOutlet weak var txtTittle: UITextField!
     
+    
     @IBAction func btnAddPicture(sender: UIButton) {
+
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            //var imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+            imagePicker.allowsEditing = false
+            presentViewController(imagePicker, animated: true, completion: nil)
+        }
         
     }
     
     @IBAction func selectPicture(sender: UIButton) {
+        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.allowsEditing = false
+            presentViewController(imagePicker, animated: true, completion: nil)
+        }
         
     }
     
     
     @IBAction func btnSave(sender: UIButton) {
+
+        var imageData = UIImageJPEGRepresentation(imageView.image!, 0.6)
+        var compressedJPGImage = UIImage(data: imageData!)
+        UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
+        
+        let alert = UIAlertView(title: "Wow",
+                                message: "Your image has been saved to Photo Library!",
+                                delegate: nil,
+                                cancelButtonTitle: "Ok")
+        alert.show()
+
     }
     
     
@@ -44,24 +72,23 @@ UINavigationControllerDelegate {
         print ("NotesDetailsVC")
         
         txtTittle.text = localVar
-        cameraSettings()
-
-    }
-
-    func cameraSettings() {
+        
         // Check if my device has camera or not
         if !UIImagePickerController.isSourceTypeAvailable(
             UIImagePickerControllerSourceType.Camera) {
             takePictureButton.hidden = true
         }
+
     }
-    
-  
-
 
     
-    
 
-    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+        self.dismissViewControllerAnimated(true, completion:nil)
+        imageView.image = image
+        
+    }
+
+
 
 }
