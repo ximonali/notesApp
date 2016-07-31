@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhd-bj-CES">
-                                <rect key="frame" x="236" y="12" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Maps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhd-bj-CES">
+                                <rect key="frame" x="328" y="194" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -26,7 +26,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="HSs-hH-HNu"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="Map" id="HSs-hH-HNu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rtx-JO-0kh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -44,8 +44,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7z-le-lqw">
-                                <rect key="frame" x="178" y="213" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sqk-Dp-JsO">
+                                <rect key="frame" x="279" y="244" width="143" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -53,11 +53,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="DXV-dm-JCd"/>
+                    <navigationItem key="navigationItem" title="Notes" id="KyD-QA-MjB"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXO-bN-CvK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="787" y="96"/>
+            <point key="canvasLocation" x="1599" y="96"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="TpA-qH-jaZ">
@@ -69,7 +69,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="s94-jS-FQ9" kind="relationship" relationship="viewControllers" id="RJ4-PF-FsS"/>
+                        <segue destination="LcC-Sb-yRn" kind="relationship" relationship="viewControllers" id="RJ4-PF-FsS"/>
                         <segue destination="SVy-LV-r7T" kind="relationship" relationship="viewControllers" id="QEu-5X-w82"/>
                     </connections>
                 </tabBarController>
@@ -77,5 +77,28 @@
             </objects>
             <point key="canvasLocation" x="-33" y="427"/>
         </scene>
+        <!--Notes-->
+        <scene sceneID="rNX-9g-TFJ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LcC-Sb-yRn" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Notes" image="Notes" id="DXV-dm-JCd"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UxI-3L-345">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="s94-jS-FQ9" kind="relationship" relationship="rootViewController" id="YyL-AM-dlJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ziz-7h-IH8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="787" y="96"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="Map" width="24" height="24"/>
+        <image name="Notes" width="24" height="24"/>
+    </resources>
 </document>
