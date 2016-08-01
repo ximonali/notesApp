@@ -41,8 +41,9 @@ UINavigationControllerDelegate {
     }
     
     @IBAction func selectPicture(sender: UIButton) {
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary){
+            //var imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
             imagePicker.allowsEditing = false
@@ -63,6 +64,11 @@ UINavigationControllerDelegate {
                                 delegate: nil,
                                 cancelButtonTitle: "Ok")
         alert.show()
+        
+        print(compressedJPGImage)
+        
+        //Here we must save the parameter of the picture (location,Date, Time, Etc) + Note: Tittle and Details
+        
 
     }
     
@@ -76,7 +82,8 @@ UINavigationControllerDelegate {
         // Check if my device has camera or not
         if !UIImagePickerController.isSourceTypeAvailable(
             UIImagePickerControllerSourceType.Camera) {
-            takePictureButton.hidden = true
+            //takePictureButton.hidden = true
+            takePictureButton.enabled = false
         }
 
     }
