@@ -13,7 +13,9 @@ class NotesDetailViewController: UIViewController, UIImagePickerControllerDelega
 UINavigationControllerDelegate {
 
     //Vars
-    var localVar: String = "";
+    var localDate: String = ""
+    var localTittle: String = ""
+    var localDescription: String = ""
     
     
     //------ Vars for camera
@@ -22,10 +24,12 @@ UINavigationControllerDelegate {
     @IBOutlet weak var takePictureButton: UIButton!
     @IBOutlet weak var pickMyPicture: UIButton!
 
+    @IBOutlet weak var lblDate: UILabel!
 
     
     
     @IBOutlet weak var txtTittle: UITextField!
+    @IBOutlet weak var txtDescription: UITextView!
     
     
     @IBAction func btnAddPicture(sender: UIButton) {
@@ -59,15 +63,39 @@ UINavigationControllerDelegate {
         var compressedJPGImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
         
-        let alert = UIAlertView(title: "Wow",
-                                message: "Your image has been saved to Photo Library!",
-                                delegate: nil,
-                                cancelButtonTitle: "Ok")
-        alert.show()
+//        let alert = UIAlertView(title: "\(txtTittle)",
+//                                message: "Your Note was saved!",
+//                                delegate: nil,
+//                                cancelButtonTitle: "Ok")
+//        alert.show()
         
+        
+        
+        
+        let alertController = UIAlertController(title: txtTittle.text, message: "Your note was saved!", preferredStyle: .Alert)
+        
+        let actionYes = UIAlertAction(title: "Ok", style: .Default) { (action:UIAlertAction) in
+            print("---After OK is Pressed---");
+        }
+        
+//        let actionNo = UIAlertAction(title: "No", style: .Default) { (action:UIAlertAction) in
+//            print("You've pressed No button");
+//        }
+        
+        alertController.addAction(actionYes)
+//        alertController.addAction(actionNo)
+        self.presentViewController(alertController, animated: true, completion:nil)
+        
+//Here we must save the parameter of the picture (location,Date, Time, Etc) + Note: Tittle and Details
+        
+        print("----TITTLE + DESCRIPTION-----")
+        print("Tittle: \(txtTittle.text)")
+        print("Description: \(txtDescription.text) \n")
+        
+        print("----IMAGEN-----")
         print(compressedJPGImage)
+        print(imageView.image!)
         
-        //Here we must save the parameter of the picture (location,Date, Time, Etc) + Note: Tittle and Details
         
 
     }
@@ -75,9 +103,12 @@ UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print ("NotesDetailsVC")
         
-        txtTittle.text = localVar
+        //Set Fields for New or Edit Note
+        txtTittle.text = localTittle
+        txtDescription.text = localDescription
+        lblDate.text = localDate
+        
         
         // Check if my device has camera or not
         if !UIImagePickerController.isSourceTypeAvailable(
