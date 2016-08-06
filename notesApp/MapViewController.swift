@@ -105,8 +105,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let cell = tableView.dequeueReusableCellWithIdentifier("MyCell", forIndexPath: indexPath) as! TableMapViewCell
         
         globalIndex = indexPath.row;
-        cell.tittleNote.text = notesList[indexPath.row].title
-        cell.dateNote.text = notesList[indexPath.row].date
+        //cell.tittleNote.text = notesList[indexPath.row].title
+        //cell.dateNote.text = notesList[indexPath.row].date
         return cell
     }
     

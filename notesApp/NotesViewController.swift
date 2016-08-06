@@ -50,10 +50,6 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         if segue.identifier == "go2details"{
             let DetailsVC = segue.destinationViewController as! NotesDetailViewController
-<<<<<<< HEAD
-            let xValue = "My New Note"
-            DetailsVC.localVar = xValue
-=======
             
             if (miFlag){
                 // User Want to ADD a NEW NOTE
@@ -63,13 +59,11 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 DetailsVC.localDescription = newDescription
             }else {
                 // User Want to EDIT a NEW NOTE
-                DetailsVC.localTittle = notesArray[globalIndex]
-                DetailsVC.localDescription = notesDetails[globalIndex]
-                DetailsVC.localDate = notesDate[globalIndex]
+                DetailsVC.localTittle = notesList[globalIndex].title
+                DetailsVC.localDescription = notesList[globalIndex].message
+                DetailsVC.localDate = notesList[globalIndex].date
                 
             }
->>>>>>> addc0b3298497dfc7ee66d3e7752231f75fe1e26
-        
         }
     }//end prepareForSegue
  
@@ -101,18 +95,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //4
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         globalIndex = indexPath.row;
-<<<<<<< HEAD
-        print("Selected Row: --> \(indexPath.row)");
-        
-        let alertController = UIAlertController(title: "Note: \(notesList[indexPath.row].title)", message: "Prepare Segue Here for row: \(indexPath.row)", preferredStyle: .Alert)
-        
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        
-        presentViewController(alertController, animated: true, completion: nil)
-=======
         print("Selected Row: --> \(globalIndex)");
->>>>>>> addc0b3298497dfc7ee66d3e7752231f75fe1e26
         
         //Here we need to send the Segue = go2details to NotesDetailViewController to show selected Note
         miFlag = false
