@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Notes {
+struct Note {
     var title: String
     var date: String
     var geolocation: String
@@ -22,6 +22,16 @@ struct Notes {
         self.image = ""
         self.message  = ""
     }
+    
+    init(title: String, date: String, geolocation: String, image: String, message: String) {
+        self.title = title
+        self.date = date
+        self.geolocation = geolocation
+        self.image = image
+        self.message  = message
+    }
+    
+    
 }
 
 

@@ -12,11 +12,11 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     //Vars
     var globalIndex: Int = 0;
-    var notesArray: [String] = ["First","Second","Third","fourth","Fifth","More..."]
-    var notesDate: [String] = ["5:45 PM","07/31/2016","07/31/2016","07/30/2016","07/25/2016","More..."]
-    var notesDetails: [String] = ["Destails Note 1 Bla bla...","Details Note 2 yes yes yes ","Details Note 3 No no no","Details Note 4 yafdiailudhf","Details Note 5 andosdlsjdljsdjsd","Details Note More..."]
-    var pictureArray:[String] = ["First","Second","Third","fourth","Fifth","More..."]
-    var pictureLocationArray: [String] = ["London","Toronto","Rio","Caracas","Scarborough","More..."]
+    let notesList = [
+        Note(title: "First", date: "07/31/2016 09:00 AM", geolocation: "Ajax", image: "First", message: "Details Note 1 bla bla bla"),
+        Note(title: "Second", date: "08/01/2016 10:00 AM", geolocation: "Toronto", image: "Second", message: "Details Note 2 yes yes yes"),
+        Note(title: "Third", date: "07/30/2016 10:00 AM", geolocation: "Vaughan", image: "Third", message: "Details Note 3 no no no")
+    ]
     
     var TableArray: [String] = []
     @IBOutlet weak var MyTableVC: UITableView!
@@ -46,7 +46,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         if segue.identifier == "go2details"{
             let DetailsVC = segue.destinationViewController as! NotesDetailViewController
-            var xValue = "My New Note"
+            let xValue = "My New Note"
             DetailsVC.localVar = xValue
         
         }
@@ -58,7 +58,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     //1
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notesArray.count
+        return notesList.count
     }
     
     //2
@@ -72,8 +72,8 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("MyCell", forIndexPath: indexPath) as! TableViewCell
         
         globalIndex = indexPath.row;
-        cell.tittleNote.text = notesArray[indexPath.row]
-        cell.dateNote.text = notesDate[indexPath.row]
+        cell.tittleNote.text = notesList[indexPath.row].title
+        cell.dateNote.text = notesList[indexPath.row].date
         return cell
     }
     
@@ -82,7 +82,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         globalIndex = indexPath.row;
         print("Selected Row: --> \(indexPath.row)");
         
-        let alertController = UIAlertController(title: "Note: \(notesArray[indexPath.row])", message: "Prepare Segue Here for row: \(indexPath.row)", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Note: \(notesList[indexPath.row].title)", message: "Prepare Segue Here for row: \(indexPath.row)", preferredStyle: .Alert)
         
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
@@ -92,5 +92,4 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //Here we need to send the Segue = go2details to NotesDetailViewController to show selected Note
         
     }
-
 }
