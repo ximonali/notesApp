@@ -13,9 +13,10 @@ class NotesDetailViewController: UIViewController, UIImagePickerControllerDelega
 UINavigationControllerDelegate {
 
     //Vars
-    var localDate: String = ""
-    var localTittle: String = ""
-    var localDescription: String = ""
+    var note = Note()
+    let rootKey = "rootKey"
+    var globalIndex: Int = -1;
+
     
     
     //------ Vars for camera
@@ -62,20 +63,20 @@ UINavigationControllerDelegate {
         var imageData = UIImageJPEGRepresentation(imageView.image!, 0.6)
         var compressedJPGImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
-        
-//        let alert = UIAlertView(title: "\(txtTittle)",
-//                                message: "Your Note was saved!",
-//                                delegate: nil,
-//                                cancelButtonTitle: "Ok")
-//        alert.show()
-        
-        
-        
+
+        if (self.globalIndex<0) {
+            let newNote = Note(title: txtTittle.text!, date: "07/08/2016", geolocation: "Toronto", image: "image", message: txtDescription.text!)
+            note.notesList.append(newNote)
+        } else {
+            note.notesList[globalIndex].title = txtTittle.text!
+            note.notesList[globalIndex].message = txtDescription.text!
+        }
         
         let alertController = UIAlertController(title: txtTittle.text, message: "Your note was saved!", preferredStyle: .Alert)
         
         let actionYes = UIAlertAction(title: "Ok", style: .Default) { (action:UIAlertAction) in
             print("---After OK is Pressed---");
+            self.navigationController?.popViewControllerAnimated(true)
         }
         
 //        let actionNo = UIAlertAction(title: "No", style: .Default) { (action:UIAlertAction) in
@@ -99,16 +100,37 @@ UINavigationControllerDelegate {
         
 
     }
-    
+  
+    func dataFileURL() -> NSURL {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(
+            .DocumentDirectory, inDomains: .UserDomainMask)
+        return urls.first!.URLByAppendingPathComponent("data.archive")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let fileURL = self.dataFileURL()
+        if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
+            let data = NSMutableData(contentsOfURL: fileURL)!
+            let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+            note = unarchiver.decodeObjectForKey(rootKey) as! Note
+            unarchiver.finishDecoding()
+        }
         
+        let app = UIApplication.sharedApplication()
+        NSNotificationCenter.defaultCenter().addObserver(self,
+        selector: #selector(UIApplicationDelegate.applicationWillResignActive(_:)),
+        name: UIApplicationWillResignActiveNotification, object: app)
+       
         //Set Fields for New or Edit Note
-        txtTittle.text = localTittle
-        txtDescription.text = localDescription
-        //lblDate.text = localDate
-        
+        if (globalIndex<0) {
+            txtTittle.text = ""
+            txtDescription.text = ""
+        } else {
+            txtTittle.text = note.notesList[globalIndex].title
+            txtDescription.text = note.notesList[globalIndex].message
+        }
         
         // Check if my device has camera or not
         if !UIImagePickerController.isSourceTypeAvailable(
@@ -119,6 +141,14 @@ UINavigationControllerDelegate {
 
     }
 
+    func applicationWillResignActive(notification:NSNotification) {
+        let fileURL = self.dataFileURL()
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        archiver.encodeObject(note, forKey: rootKey)
+        archiver.finishEncoding()
+        data.writeToURL(fileURL, atomically: true)
+    }
     
 
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){

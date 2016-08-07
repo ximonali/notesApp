@@ -11,8 +11,7 @@ import UIKit
 class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //Vars
-    var miFlag: Bool = true
-    var globalIndex: Int = 0
+    var globalIndex: Int = -1
     var note = Note()
     let rootKey = "rootKey"
 
@@ -22,9 +21,8 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     
     @IBAction func btnAdd(sender: UIBarButtonItem) {
-        miFlag = true
+        self.globalIndex = -1
         self.performSegueWithIdentifier("go2details", sender: self)
-        
     }
     
     func dataFileURL() -> NSURL {
@@ -62,9 +60,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //My Custom TableView
         MyTableVC.delegate = self;
         MyTableVC.dataSource = self;
-        
-        //Var miFlag to check Segue if is NewNote or EditExistingOne
-        miFlag = true
+    
         
         // Do any additional setup after loading the view.
     }
@@ -83,20 +79,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         if segue.identifier == "go2details"{
             let DetailsVC = segue.destinationViewController as! NotesDetailViewController
-            
-            if (miFlag){
-                // User Want to ADD a NEW NOTE
-                let NewTittle = "My Note Tittle"
-                let newDescription = "Write here your note description:"
-                DetailsVC.localTittle = NewTittle
-                DetailsVC.localDescription = newDescription
-            }else {
-                // User Want to EDIT a NEW NOTE
-                DetailsVC.localTittle = note.notesList[globalIndex].title
-                DetailsVC.localDescription = note.notesList[globalIndex].message
-                DetailsVC.localDate = note.notesList[globalIndex].date
-                
-            }
+            DetailsVC.globalIndex = self.globalIndex
         }
     }//end prepareForSegue
  
@@ -131,7 +114,6 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         print("Selected Row: --> \(globalIndex)");
         
         //Here we need to send the Segue = go2details to NotesDetailViewController to show selected Note
-        miFlag = false
         self.performSegueWithIdentifier("go2details", sender: self)
         
     }
