@@ -137,6 +137,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Notes" id="KyD-QA-MjB">
+                        <barButtonItem key="leftBarButtonItem" title="Sort" id="ifo-GA-eid">
+                            <connections>
+                                <action selector="btnOrderBy:" destination="s94-jS-FQ9" id="BT2-5O-iWV"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="New" id="i5R-mu-Fvl">
                             <connections>
                                 <action selector="btnAdd:" destination="s94-jS-FQ9" id="uj8-Po-GJ1"/>

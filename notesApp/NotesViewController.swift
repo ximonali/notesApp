@@ -13,6 +13,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //Vars
     var globalIndex: Int = -1
     var note = Note()
+    var sortNote = [Note] ()
     let rootKey = "rootKey"
 
     //Search Bar
@@ -23,6 +24,64 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //TableView
     var TableArray: [String] = []
     @IBOutlet weak var MyTableVC: UITableView!
+    
+    @IBAction func btnOrderBy(sender: UIBarButtonItem) {
+
+        let actionSheetController: UIAlertController = UIAlertController(title: "Sort By...", message: "", preferredStyle: .ActionSheet)
+        
+
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            //Cancel
+        }
+        actionSheetController.addAction(cancelAction)
+        
+
+        let sortByTittleAZ: UIAlertAction = UIAlertAction(title: "Tittle (A-Z)", style: .Default) { action -> Void in
+            //Tittle
+            self.note.notesList.sortInPlace({ $0.title < $1.title })
+            self.MyTableVC.reloadData();
+        }
+        actionSheetController.addAction(sortByTittleAZ)
+        
+        let sortByTittleZA: UIAlertAction = UIAlertAction(title: "Tittle (Z-A)", style: .Default) { action -> Void in
+            //Tittle
+            self.note.notesList.sortInPlace({ $0.title > $1.title })
+            self.MyTableVC.reloadData();
+        }
+        actionSheetController.addAction(sortByTittleZA)
+
+        let sortByNewestSaved: UIAlertAction = UIAlertAction(title: "Newest Saved", style: .Default) { action -> Void in
+            //sortNewestSaved
+            self.note.notesList.sortInPlace({ $0.date > $1.date })
+            self.MyTableVC.reloadData();
+        }
+        actionSheetController.addAction(sortByNewestSaved)
+        
+        let sortByOldestSaved: UIAlertAction = UIAlertAction(title: "Oldest Saved", style: .Default) { action -> Void in
+            //sortByOldestSaved
+            self.note.notesList.sortInPlace({ $0.date < $1.date })
+            self.MyTableVC.reloadData();
+        }
+        actionSheetController.addAction(sortByOldestSaved)
+        
+        let sortByLongest: UIAlertAction = UIAlertAction(title: "Longest Notes", style: .Default) { action -> Void in
+            //sortByLongest
+            self.note.notesList.sortInPlace({ $0.message < $1.message })
+            self.MyTableVC.reloadData();
+        }
+        actionSheetController.addAction(sortByLongest)
+        
+        let sortByShortest: UIAlertAction = UIAlertAction(title: "Shortest Notes", style: .Default) { action -> Void in
+            //sortByShortest
+            self.note.notesList.sortInPlace({ $0.message > $1.message })
+            self.MyTableVC.reloadData();
+        }
+        actionSheetController.addAction(sortByShortest)
+        
+        //Present the AlertController
+        self.presentViewController(actionSheetController, animated: true, completion: nil)
+        
+    }
     
     
     @IBAction func btnAdd(sender: UIBarButtonItem) {
@@ -144,16 +203,23 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //5 To remore from table View
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            var delNote = note.notesList[indexPath.row]
             
-            print("Note to be Deleted: \(delNote.title) \(delNote.date)")
+            var delNote = note.notesList[indexPath.row]
             
             let alertController = UIAlertController(title: delNote.title, message: "Would you like to delete actual note ?", preferredStyle: .Alert)
             
             let actionYes = UIAlertAction(title: "Ok", style: .Default) { (action:UIAlertAction) in
                 print("---YES delete!!!---");
                 //Here remove from DB
+                //print("----------BEFORE-------------")
+                //dump(self.note.notesList)
+                
                 self.note.notesList.removeAtIndex(indexPath.row)
+                
+                //print("----------AFTER-------------")
+                //dump(self.note.notesList)
+                
+                self.MyTableVC.reloadData();
             }
             
             let actionNo = UIAlertAction(title: "No", style: .Default) { (action:UIAlertAction) in
@@ -165,7 +231,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.presentViewController(alertController, animated: true, completion:nil)
             
             
-            MyTableVC.reloadData();
+            //MyTableVC.reloadData();
 
         }
         
