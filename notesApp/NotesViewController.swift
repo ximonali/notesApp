@@ -12,12 +12,10 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     //Vars
     var miFlag: Bool = true
-    var globalIndex: Int = 0;
-    var notesArray: [String] = ["First","Second","Third","fourth","Fifth","More..."]
-    var notesDate: [String] = ["5:45 PM","07/31/2016","07/31/2016","07/30/2016","07/25/2016","More..."]
-    var notesDetails: [String] = ["Destails Note 1 Bla bla...","Details Note 2 yes yes yes ","Details Note 3 No no no","Details Note 4 yafdiailudhf","Details Note 5 andosdlsjdljsdjsd","Details Note More..."]
-    var pictureArray:[String] = ["First","Second","Third","fourth","Fifth","More..."]
-    var pictureLocationArray: [String] = ["London","Toronto","Rio","Caracas","Scarborough","More..."]
+    var globalIndex: Int = 0
+    var note = Note()
+    let rootKey = "rootKey"
+
     
     var TableArray: [String] = []
     @IBOutlet weak var MyTableVC: UITableView!
@@ -29,11 +27,37 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
     }
     
-    
+    func dataFileURL() -> NSURL {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(
+            .DocumentDirectory, inDomains: .UserDomainMask)
+        return urls.first!.URLByAppendingPathComponent("data.archive")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print ("NotesVC")
+        let fileURL = self.dataFileURL()
+        if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
+            let data = NSMutableData(contentsOfURL: fileURL)!
+            let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+            note = unarchiver.decodeObjectForKey(rootKey) as! Note
+            unarchiver.finishDecoding()
+        }
+        
+        let app = UIApplication.sharedApplication()
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: #selector(UIApplicationDelegate.applicationWillResignActive(_:)),
+            name: UIApplicationWillResignActiveNotification,
+            object: app)
+        
+        if (note.notesList.count==0) {
+            let Note1 = Note(title: "First", date: "07/31/2016 09:00 AM", geolocation: "Ajax", image: "First", message: "Details Note 1 bla bla bla")
+            let Note2 = Note(title: "Second", date: "08/01/2016 10:00 AM", geolocation: "Toronto", image: "Second", message: "Details Note 2 yes yes yes")
+            let Note3 = Note(title: "Third", date: "07/30/2016 10:00 AM", geolocation: "Vaughan", image: "Third", message: "Details Note 3 no no no")
+            note.notesList.append(Note1)
+            note.notesList.append(Note2)
+            note.notesList.append(Note3)
+        }
         
         //My Custom TableView
         MyTableVC.delegate = self;
@@ -43,6 +67,15 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         miFlag = true
         
         // Do any additional setup after loading the view.
+    }
+    
+    func applicationWillResignActive(notification:NSNotification) {
+        let fileURL = self.dataFileURL()
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        archiver.encodeObject(note, forKey: rootKey)
+        archiver.finishEncoding()
+        data.writeToURL(fileURL, atomically: true)
     }
 
     
@@ -59,12 +92,11 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 DetailsVC.localDescription = newDescription
             }else {
                 // User Want to EDIT a NEW NOTE
-                DetailsVC.localTittle = notesArray[globalIndex]
-                DetailsVC.localDescription = notesDetails[globalIndex]
-                DetailsVC.localDate = notesDate[globalIndex]
+                DetailsVC.localTittle = note.notesList[globalIndex].title
+                DetailsVC.localDescription = note.notesList[globalIndex].message
+                DetailsVC.localDate = note.notesList[globalIndex].date
                 
             }
-        
         }
     }//end prepareForSegue
  
@@ -74,7 +106,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     //1
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notesArray.count
+        return note.notesList.count
     }
     
     //2
@@ -88,8 +120,8 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("MyCell", forIndexPath: indexPath) as! TableViewCell
         
         globalIndex = indexPath.row;
-        cell.tittleNote.text = notesArray[indexPath.row]
-        cell.dateNote.text = notesDate[indexPath.row]
+        cell.tittleNote.text = note.notesList[indexPath.row].title
+        cell.dateNote.text = note.notesList[indexPath.row].date
         return cell
     }
     
@@ -103,5 +135,4 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.performSegueWithIdentifier("go2details", sender: self)
         
     }
-
 }
