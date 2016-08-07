@@ -154,7 +154,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         globalIndex = indexPath.row;
         print("Selected Row: --> \(indexPath.row)");
         
-        let alertController = UIAlertController(title: "Note: \(note.notesList[indexPath.row].title)", message: "Location: \(note.notesList[indexPath.row].geolocation) \n Date: \(note.notesList[indexPath.row].date) \n Image: \(note.notesList[indexPath.row].image) \n Message: \(note.notesList[indexPath.row].message) ", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Note: \(note.notesList[indexPath.row].title)", message: "Location: \(note.notesList[indexPath.row].geolocation) \n Date: \(note.notesList[indexPath.row].date) \n Image: \(note.notesList[indexPath.row].image)", preferredStyle: .Alert)
         
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
