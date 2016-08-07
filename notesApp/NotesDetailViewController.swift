@@ -24,7 +24,7 @@ UINavigationControllerDelegate {
     @IBOutlet weak var takePictureButton: UIButton!
     @IBOutlet weak var pickMyPicture: UIButton!
 
-    @IBOutlet weak var lblDate: UILabel!
+    //@IBOutlet weak var lblDate: UILabel!
 
     
     
@@ -63,14 +63,6 @@ UINavigationControllerDelegate {
         var compressedJPGImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
         
-//        let alert = UIAlertView(title: "\(txtTittle)",
-//                                message: "Your Note was saved!",
-//                                delegate: nil,
-//                                cancelButtonTitle: "Ok")
-//        alert.show()
-        
-        
-        
         
         let alertController = UIAlertController(title: txtTittle.text, message: "Your note was saved!", preferredStyle: .Alert)
         
@@ -107,7 +99,7 @@ UINavigationControllerDelegate {
         //Set Fields for New or Edit Note
         txtTittle.text = localTittle
         txtDescription.text = localDescription
-        lblDate.text = localDate
+        //lblDate.text = localDate
         
         
         // Check if my device has camera or not

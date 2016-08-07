@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate {
 
     //Vars
     var miFlag: Bool = true
@@ -16,7 +16,12 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var note = Note()
     let rootKey = "rootKey"
 
+    //Search Bar
+    var filteredTittle = [Note] ()
+    var searchActive = false
+    @IBOutlet weak var searchBar: UISearchBar!
     
+    //TableView
     var TableArray: [String] = []
     @IBOutlet weak var MyTableVC: UITableView!
     
@@ -35,7 +40,8 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print ("NotesVC")
+        //print ("NotesVC")
+        
         let fileURL = self.dataFileURL()
         if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
             let data = NSMutableData(contentsOfURL: fileURL)!
@@ -62,6 +68,9 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //My Custom TableView
         MyTableVC.delegate = self;
         MyTableVC.dataSource = self;
+        
+        //My SearchBar
+        searchBar.delegate = self;
         
         //Var miFlag to check Segue if is NewNote or EditExistingOne
         miFlag = true
@@ -106,7 +115,15 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     //1
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return note.notesList.count
+
+        var countNum = 0;
+        if searchActive {
+            countNum = filteredTittle.count
+        }else
+        {
+            countNum = note.notesList.count
+        }
+        return countNum
     }
     
     //2
@@ -120,8 +137,17 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("MyCell", forIndexPath: indexPath) as! TableViewCell
         
         globalIndex = indexPath.row;
-        cell.tittleNote.text = note.notesList[indexPath.row].title
-        cell.dateNote.text = note.notesList[indexPath.row].date
+        
+        if searchActive {
+            cell.tittleNote.text = filteredTittle[indexPath.row].title
+            cell.dateNote.text = filteredTittle[indexPath.row].date
+        }else
+        {
+            cell.tittleNote.text = note.notesList[indexPath.row].title
+            cell.dateNote.text = note.notesList[indexPath.row].date
+            
+        }
+
         return cell
     }
     
@@ -130,9 +156,70 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         globalIndex = indexPath.row;
         print("Selected Row: --> \(globalIndex)");
         
-        //Here we need to send the Segue = go2details to NotesDetailViewController to show selected Note
         miFlag = false
         self.performSegueWithIdentifier("go2details", sender: self)
         
     }
+    
+    //5 To remore from table View
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            var delNote = note.notesList[indexPath.row]
+            
+            print("Note to be Deleted: \(delNote.title) \(delNote.date)")
+            
+            let alertController = UIAlertController(title: delNote.title, message: "Would you like to delete actual note ?", preferredStyle: .Alert)
+            
+            let actionYes = UIAlertAction(title: "Ok", style: .Default) { (action:UIAlertAction) in
+                print("---YES delete!!!---");
+                //Here remove from DB
+                self.note.notesList.removeAtIndex(indexPath.row)
+            }
+            
+            let actionNo = UIAlertAction(title: "No", style: .Default) { (action:UIAlertAction) in
+                print("--NO Abort--");
+            }
+            
+            alertController.addAction(actionYes)
+            alertController.addAction(actionNo)
+            self.presentViewController(alertController, animated: true, completion:nil)
+            
+            
+            MyTableVC.reloadData();
+
+        }
+        
+    }
+    
+    //6 To Enable DELETE from table View
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    
+    //Search Bar
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchBar.text!.isEmpty) {
+            self.searchActive = false
+        } else {
+            filteredTittle.removeAll(keepCapacity: false)
+            for (var index=0; index < note.notesList.count; index++) {
+                let myTittle = note.notesList[index].title
+                //Here We MUST add the description FIELD
+                if(myTittle.lowercaseString.rangeOfString(searchText.lowercaseString) != nil ){
+                    filteredTittle.append(note.notesList[index]);
+                    self.searchActive = true
+                }
+            }
+        }
+        
+        self.MyTableVC.reloadData()
+    }//end searchBar
+    
+    
 }
+
+
+
+
+
