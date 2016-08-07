@@ -161,7 +161,40 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
     }
     
-    //5
+    //5 To remore from table View
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            var delNote = note.notesList[indexPath.row]
+            
+            print("Note to be Deleted: \(delNote.title) \(delNote.date)")
+            
+            let alertController = UIAlertController(title: delNote.title, message: "Would you like to delete actual note ?", preferredStyle: .Alert)
+            
+            let actionYes = UIAlertAction(title: "Ok", style: .Default) { (action:UIAlertAction) in
+                print("---YES delete!!!---");
+                //Here remove from DB
+                self.note.notesList.removeAtIndex(indexPath.row)
+            }
+            
+            let actionNo = UIAlertAction(title: "No", style: .Default) { (action:UIAlertAction) in
+                print("--NO Abort--");
+            }
+            
+            alertController.addAction(actionYes)
+            alertController.addAction(actionNo)
+            self.presentViewController(alertController, animated: true, completion:nil)
+            
+            
+            MyTableVC.reloadData();
+
+        }
+        
+    }
+    
+    //6 To Enable DELETE from table View
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
     
     
     //Search Bar
@@ -172,7 +205,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
             filteredTittle.removeAll(keepCapacity: false)
             for (var index=0; index < note.notesList.count; index++) {
                 let myTittle = note.notesList[index].title
-                //Here We MUST add the description FIELD 
+                //Here We MUST add the description FIELD
                 if(myTittle.lowercaseString.rangeOfString(searchText.lowercaseString) != nil ){
                     filteredTittle.append(note.notesList[index]);
                     self.searchActive = true

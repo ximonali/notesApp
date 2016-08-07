@@ -63,14 +63,6 @@ UINavigationControllerDelegate {
         var compressedJPGImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
         
-//        let alert = UIAlertView(title: "\(txtTittle)",
-//                                message: "Your Note was saved!",
-//                                delegate: nil,
-//                                cancelButtonTitle: "Ok")
-//        alert.show()
-        
-        
-        
         
         let alertController = UIAlertController(title: txtTittle.text, message: "Your note was saved!", preferredStyle: .Alert)
         
