@@ -125,6 +125,9 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //My Custom TableView
         MyTableVC.delegate = self;
         MyTableVC.dataSource = self;
+        
+        //Search Bar
+        searchBar.delegate = self
     
         
         // Do any additional setup after loading the view.
@@ -179,10 +182,12 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if searchActive {
             cell.tittleNote.text = filteredTittle[indexPath.row].title
+            cell.lblMessage.text = filteredTittle[indexPath.row].message
             cell.dateNote.text = filteredTittle[indexPath.row].date
         }else
         {
             cell.tittleNote.text = note.notesList[indexPath.row].title
+            cell.lblMessage.text = note.notesList[indexPath.row].message
             cell.dateNote.text = note.notesList[indexPath.row].date
             
         }
@@ -245,6 +250,8 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     //Search Bar
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        print("Get into Search Bar")
         if(searchBar.text!.isEmpty) {
             self.searchActive = false
         } else {
