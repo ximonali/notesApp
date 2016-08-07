@@ -15,13 +15,14 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     //Vars
     var addressString: String = ""
     var locations = [MKPlacemark]()
-
+    var note = Note()
+    let rootKey = "rootKey"
     var globalIndex: Int = 0;
-    let notesList = [
+    /*let notesList = [
         Note(title: "First", date: "07/31/2016 09:00 AM", geolocation: "Ajax", image: "First", message: "Details Note 1 bla bla bla"),
         Note(title: "Second", date: "08/01/2016 10:00 AM", geolocation: "Toronto", image: "Second", message: "Details Note 2 yes yes yes"),
         Note(title: "Third", date: "07/30/2016 10:00 AM", geolocation: "Vaughan", image: "Third", message: "Details Note 3 no no no")
-    ]
+    ]*/
     
     @IBOutlet weak var map: MKMapView!
     
@@ -52,11 +53,29 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
 
         
     }
-
+    
+    func dataFileURL() -> NSURL {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(
+            .DocumentDirectory, inDomains: .UserDomainMask)
+        return urls.first!.URLByAppendingPathComponent("data.archive")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let fileURL = self.dataFileURL()
+        if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
+            let data = NSMutableData(contentsOfURL: fileURL)!
+            let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+            note = unarchiver.decodeObjectForKey(rootKey) as! Note
+            unarchiver.finishDecoding()
+        }
+        
+        let app = UIApplication.sharedApplication()
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(UIApplicationDelegate.applicationWillResignActive(_:)),
+                                                         name: UIApplicationWillResignActiveNotification,
+                                                         object: app)
 
         let geocoder: CLGeocoder = CLGeocoder()
         
@@ -76,11 +95,20 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             }
         })
         
-        for note in notesList {
-            addMap(note.geolocation)
+        for noteItem in note.notesList {
+            addMap(noteItem.geolocation)
         }
     }
-
+    
+    func applicationWillResignActive(notification:NSNotification) {
+        let fileURL = self.dataFileURL()
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        archiver.encodeObject(note, forKey: rootKey)
+        archiver.finishEncoding()
+        data.writeToURL(fileURL, atomically: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -91,7 +119,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     //1
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notesList.count
+        return note.notesList.count
     }
     
     //2
@@ -115,7 +143,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         globalIndex = indexPath.row;
         print("Selected Row: --> \(indexPath.row)");
         
-        let alertController = UIAlertController(title: "Note: \(notesList[indexPath.row].title)", message: "Prepare Segue Here for row: \(indexPath.row)", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Note: \(note.notesList[indexPath.row].title)", message: "Prepare Segue Here for row: \(indexPath.row)", preferredStyle: .Alert)
         
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
