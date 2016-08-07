@@ -73,9 +73,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         let app = UIApplication.sharedApplication()
         NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(UIApplicationDelegate.applicationWillResignActive(_:)),
-                                                         name: UIApplicationWillResignActiveNotification,
-                                                         object: app)
+        selector: #selector(UIApplicationDelegate.applicationWillResignActive(_:)),
+        name: UIApplicationWillResignActiveNotification, object: app)
 
         let geocoder: CLGeocoder = CLGeocoder()
         
