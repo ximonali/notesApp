@@ -13,6 +13,7 @@ class TableViewCell: UITableViewCell {
     //Vars
     @IBOutlet weak var tittleNote: UILabel!
     @IBOutlet weak var dateNote: UILabel!
+    @IBOutlet weak var lblMessage: UILabel!
     
     
     
