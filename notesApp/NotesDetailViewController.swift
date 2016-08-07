@@ -24,7 +24,7 @@ UINavigationControllerDelegate {
     @IBOutlet weak var takePictureButton: UIButton!
     @IBOutlet weak var pickMyPicture: UIButton!
 
-    @IBOutlet weak var lblDate: UILabel!
+    //@IBOutlet weak var lblDate: UILabel!
 
     
     
@@ -107,7 +107,7 @@ UINavigationControllerDelegate {
         //Set Fields for New or Edit Note
         txtTittle.text = localTittle
         txtDescription.text = localDescription
-        lblDate.text = localDate
+        //lblDate.text = localDate
         
         
         // Check if my device has camera or not
