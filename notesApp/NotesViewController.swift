@@ -274,12 +274,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.searchActive = false
         } else {
             filteredTittle.removeAll(keepCapacity: false)
-<<<<<<< HEAD
-            for (var index=0; index < note.notesList.count; index++) {
-                //We need to search for Tittle or inside the Message
-=======
             for (var index=0; index < note.notesList.count; index+=1) {
->>>>>>> origin/master
                 let myTittle = note.notesList[index].title
                 let myMessage = note.notesList[index].message
                 if(myTittle.lowercaseString.rangeOfString(searchText.lowercaseString) != nil || myMessage.lowercaseString.rangeOfString(searchText.lowercaseString) != nil ){
