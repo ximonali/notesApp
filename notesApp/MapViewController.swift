@@ -126,6 +126,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             note = unarchiver.decodeObjectForKey(rootKey) as! Note
             unarchiver.finishDecoding()
             self.MyTableVC.reloadData()
+            self.locations.removeAll()
             self.map.removeAnnotations(self.map.annotations)
             for noteItem in note.notesList {
                 addMap(noteItem.geolocation)
