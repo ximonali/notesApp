@@ -11,6 +11,7 @@ import UIKit
 class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate {
 
     //Vars
+    //Conflict Line
     var globalIndex: Int = -1
     var note = Note()
     var sortNote = [Note] ()
