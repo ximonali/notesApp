@@ -28,11 +28,11 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var MyTableVC: UITableView!
     
     
-    func addMap(address: String) {
+    func addMap(addNote: Note) {
       
         let geocoder: CLGeocoder = CLGeocoder()
         
-        geocoder.geocodeAddressString(address,completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+        geocoder.geocodeAddressString(addNote.geolocation,completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
             if (placemarks?.count > 0) {
                 let first: CLPlacemark = (placemarks?[0])!
                 let placemark: MKPlacemark = MKPlacemark(placemark: first)
@@ -40,7 +40,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                     
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = (placemark.location?.coordinate)!
-                annotation.title = address
+                annotation.title = "\(addNote.title) in \(addNote.geolocation) at \(addNote.date)"
                         
                 var region: MKCoordinateRegion = self.map.region
                 region.center.latitude = (placemark.location?.coordinate.latitude)!
@@ -81,13 +81,13 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         selector: #selector(UIApplicationDelegate.applicationWillResignActive(_:)),
         name: UIApplicationWillResignActiveNotification, object: app)
 
-        let geocoder: CLGeocoder = CLGeocoder()
+        //let geocoder: CLGeocoder = CLGeocoder()
         
-        geocoder.geocodeAddressString("Toronto",completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+        /*geocoder.geocodeAddressString("Toronto",completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
             if (placemarks?.count > 0) {
                 let first: CLPlacemark = (placemarks?[0])!
                 let placemark: MKPlacemark = MKPlacemark(placemark: first)
-                self.locations.append(placemark)
+                //self.locations.append(placemark)
                 
                 var region: MKCoordinateRegion = self.map.region
                 region.center.latitude = (placemark.location?.coordinate.latitude)!
@@ -97,10 +97,11 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 
                 self.map.setRegion(region, animated: true)
             }
-        })
-        
+        })*/
+        self.locations.removeAll()
+        self.map.removeAnnotations(self.map.annotations)
         for noteItem in note.notesList {
-            addMap(noteItem.geolocation)
+            addMap(noteItem)
         }
         print("Printing all elements in ** note.noteList (Array) in ViewDidLoad **")
         print("------RESULT-----")
@@ -129,7 +130,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             self.locations.removeAll()
             self.map.removeAnnotations(self.map.annotations)
             for noteItem in note.notesList {
-                addMap(noteItem.geolocation)
+                addMap(noteItem)
             }
             
         }
@@ -186,16 +187,32 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         //presentViewController(alertController, animated: true, completion: nil)
         
-        let location = self.locations[indexPath.row]
+        let geocoder: CLGeocoder = CLGeocoder()
         
-        var region: MKCoordinateRegion = self.map.region
-        region.center.latitude = (location.coordinate.latitude)
-        region.center.longitude = (location.coordinate.longitude)
+        geocoder.geocodeAddressString(note.notesList[indexPath.row].geolocation,completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+         if (placemarks?.count > 0) {
+            let first: CLPlacemark = (placemarks?[0])!
+            let placemark: MKPlacemark = MKPlacemark(placemark: first)
+            //self.locations.append(placemark)
+         
+            var region: MKCoordinateRegion = self.map.region
+            region.center.latitude = (placemark.location?.coordinate.latitude)!
+            region.center.longitude = (placemark.location?.coordinate.longitude)!
+         
+            region.span = MKCoordinateSpanMake(0.5, 0.5)
+         
+            self.map.setRegion(region, animated: true)
+         }
+         })
         
-        region.span = MKCoordinateSpanMake(0.5, 0.5)
+        //var region: MKCoordinateRegion = self.map.region
+        //region.center.latitude = (location.coordinate.latitude)
+        //region.center.longitude = (location.coordinate.longitude)
         
-        self.map.setRegion(region, animated: true)
+        //region.span = MKCoordinateSpanMake(0.5, 0.5)
         
+        //self.map.setRegion(region, animated: true)
+        //self.map.selectAnnotation(map.annotations[indexPath.row], animated: true)
         //Here we need to send the Segue = go2details to NotesDetailViewController to show selected Note
         
     }
