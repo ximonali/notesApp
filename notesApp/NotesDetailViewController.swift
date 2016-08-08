@@ -76,6 +76,7 @@ UINavigationControllerDelegate {
         
         let actionYes = UIAlertAction(title: "Ok", style: .Default) { (action:UIAlertAction) in
             print("---After OK is Pressed---");
+            self.updateNote()
             self.navigationController?.popViewControllerAnimated(true)
         }
         
@@ -142,14 +143,19 @@ UINavigationControllerDelegate {
     }
 
     func applicationWillResignActive(notification:NSNotification) {
+        updateNote()
+    }
+ 
+    func updateNote()
+    {
         let fileURL = self.dataFileURL()
         let data = NSMutableData()
         let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
         archiver.encodeObject(note, forKey: rootKey)
         archiver.finishEncoding()
         data.writeToURL(fileURL, atomically: true)
+        
     }
-    
 
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
         self.dismissViewControllerAnimated(true, completion:nil)
