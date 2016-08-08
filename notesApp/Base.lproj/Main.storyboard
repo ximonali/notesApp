@@ -70,9 +70,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="o5O-v7-Plz">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="w3K-pN-i60"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="o5O-v7-Plz"/>
                     <connections>
                         <outlet property="MyTableVC" destination="6Qa-m7-Jeg" id="ej0-Yc-sQ1"/>
                         <outlet property="map" destination="0la-HI-cAB" id="09j-g7-hHn"/>
