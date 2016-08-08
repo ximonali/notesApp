@@ -67,15 +67,22 @@ UINavigationControllerDelegate {
             compressedJPGImage = nil
         }
 
-
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        
+        let year =  components.year
+        let month = components.month
+        let day = components.day
+        
         if (self.globalIndex<0) {
-            
-            let newNote = Note(id: note.notesList.count, title: txtTittle.text!, date: "07/08/2016", geolocation: "Toronto", image: compressedJPGImage, message: txtDescription.text!)
+            let newNote = Note(id: note.notesList.count, title: txtTittle.text!, date: "\(day)/\(month)/\(year)", geolocation: txtLocation.text!, image: compressedJPGImage, message: txtDescription.text!)
             note.notesList.append(newNote)
         } else {
             note.notesList[globalIndex].title = txtTittle.text!
             note.notesList[globalIndex].message = txtDescription.text!
             note.notesList[globalIndex].image = imageView.image
+            note.notesList[globalIndex].geolocation = txtLocation.text!
         }
         
         let alertController = UIAlertController(title: txtTittle.text, message: "Your note was saved!", preferredStyle: .Alert)
@@ -100,9 +107,9 @@ UINavigationControllerDelegate {
         print("Tittle: \(txtTittle.text)")
         print("Description: \(txtDescription.text) \n")
         
-        print("----IMAGEN-----")
-        print(compressedJPGImage)
-        print(imageView.image!)
+       //print("----IMAGEN-----")
+        //print(compressedJPGImage)
+        //print(imageView.image!)
         
         
 
@@ -138,6 +145,7 @@ UINavigationControllerDelegate {
         } else {
             txtTittle.text = note.notesList[globalIndex].title
             txtDescription.text = note.notesList[globalIndex].message
+            txtLocation.text = note.notesList[globalIndex].geolocation
             imageView.image = note.notesList[globalIndex].image
         }
         
@@ -168,7 +176,6 @@ UINavigationControllerDelegate {
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
         self.dismissViewControllerAnimated(true, completion:nil)
         imageView.image = image
-        
     }
 
 

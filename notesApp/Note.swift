@@ -42,7 +42,7 @@ class Note : NSObject, NSCoding, NSCopying{
     }
     
     func encodeWithCoder(coder: NSCoder) {
-        coder.encodeInt(32, forKey: "idKey")
+        coder.encodeInt(Int32(id), forKey: "idKey")
         coder.encodeObject(title, forKey: "titleKey")
         coder.encodeObject(date, forKey: "dateKey")
         coder.encodeObject(geolocation, forKey: "geolocationKey")

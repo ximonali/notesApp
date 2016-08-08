@@ -113,12 +113,14 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if (note.notesList.count==0) {
             print("inserting data")
-            let Note1 = Note(id:0,title: "First", date: "07/31/2016", geolocation: "Ajax", image:nil, message: "Details Note 1 bla bla bla")
-            let Note2 = Note(id:1,title: "Second", date: "08/01/2016", geolocation: "Toronto", image: nil, message: "Details Note 2 yes yes yes")
-            let Note3 = Note(id:2,title: "Third", date: "07/30/2016", geolocation: "Vaughan", image: nil, message: "Details Note 3 no no no")
+            let Note1 = Note(id:0,title: "First", date: "1/5/2016", geolocation: "Ajax", image:nil, message: "Details Note 1 bla bla bla")
+            let Note2 = Note(id:1,title: "Second", date: "18/6/2016", geolocation: "Toronto", image: nil, message: "Details Note 2 yes yes yes")
+            let Note3 = Note(id:2,title: "Third", date: "3/7/2016", geolocation: "Vaughan", image: nil, message: "Details Note 3 no no no")
             note.notesList.append(Note1)
             note.notesList.append(Note2)
             note.notesList.append(Note3)
+            updateNote()
+            getNote()
         }
         
         //My Custom TableView
@@ -194,14 +196,14 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         let cell = tableView.dequeueReusableCellWithIdentifier("MyCell", forIndexPath: indexPath) as! TableViewCell
         
-        globalIndex = indexPath.row;
-        
         if searchActive {
+            globalIndex = filteredTittle[indexPath.row].id;
             cell.tittleNote.text = filteredTittle[indexPath.row].title
             cell.lblMessage.text = filteredTittle[indexPath.row].message
             cell.dateNote.text = filteredTittle[indexPath.row].date
         }else
         {
+            globalIndex = note.notesList[indexPath.row].id;
             cell.tittleNote.text = note.notesList[indexPath.row].title
             cell.lblMessage.text = note.notesList[indexPath.row].message
             cell.dateNote.text = note.notesList[indexPath.row].date
@@ -213,7 +215,13 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     //4
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        globalIndex = indexPath.row;
+ 
+        if searchActive {
+            globalIndex = filteredTittle[indexPath.row].id;
+        }else
+        {
+            globalIndex = note.notesList[indexPath.row].id;
+        }
         print("Selected Row: --> \(globalIndex)");
         updateNote()
         

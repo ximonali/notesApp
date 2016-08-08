@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Fsg-4h-TSt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Fsg-4h-TSt">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -297,7 +297,7 @@
         <scene sceneID="rNX-9g-TFJ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LcC-Sb-yRn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notes" image="Notes" id="DXV-dm-JCd"/>
+                    <tabBarItem key="tabBarItem" title="Notes" image="Notes" id="XVq-j8-gwE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="UxI-3L-345">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -316,11 +316,7 @@
         <scene sceneID="6oV-lD-7UL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ge6-St-13N" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" image="Map" id="HSs-hH-HNu">
-                        <string key="badgeValue" base64-UTF8="YES">
-CQ
-</string>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Map" image="Map" id="HSs-hH-HNu"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ksr-dx-bUj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -332,6 +328,11 @@ CQ
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hpm-dA-z4C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBarItem title="Map" image="Map" id="GnG-rE-Ott">
+                    <string key="badgeValue" base64-UTF8="YES">
+CQ
+</string>
+                </tabBarItem>
             </objects>
             <point key="canvasLocation" x="786.5" y="849.5"/>
         </scene>
