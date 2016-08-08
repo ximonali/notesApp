@@ -11,9 +11,9 @@ import UIKit
 class TableMapViewCell: UITableViewCell {
     
     //Vars
-    //@IBOutlet weak var tittleNote: UILabel!
-    //@IBOutlet weak var dateNote: UILabel!
     
+    @IBOutlet weak var tittleNote: UILabel!
+    @IBOutlet weak var locationNote: UILabel!
     
     
     override func awakeFromNib() {

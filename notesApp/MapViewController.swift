@@ -25,6 +25,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     ]*/
     
     @IBOutlet weak var map: MKMapView!
+    @IBOutlet weak var MyTableVC: UITableView!
     
     
     func addMap(address: String) {
@@ -63,6 +64,12 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        //My Custom TableView
+        MyTableVC.delegate = self;
+        MyTableVC.dataSource = self;
+        
+        
         let fileURL = self.dataFileURL()
         if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
             let data = NSMutableData(contentsOfURL: fileURL)!
@@ -97,6 +104,10 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         for noteItem in note.notesList {
             addMap(noteItem.geolocation)
         }
+        print("Printing all elements in ** note.noteList (Array) in ViewDidLoad **")
+        print("------RESULT-----")
+        dump(note.notesList)
+        
     }
     
     func applicationWillResignActive(notification:NSNotification) {
@@ -118,6 +129,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     //1
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(note.notesList.count)
         return note.notesList.count
     }
     
@@ -132,8 +144,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let cell = tableView.dequeueReusableCellWithIdentifier("MyCell", forIndexPath: indexPath) as! TableMapViewCell
         
         globalIndex = indexPath.row;
-        //cell.tittleNote.text = notesList[indexPath.row].title
-        //cell.dateNote.text = notesList[indexPath.row].date
+        cell.tittleNote.text = note.notesList[indexPath.row].title
+        cell.locationNote.text = note.notesList[indexPath.row].geolocation
         return cell
     }
     
@@ -142,7 +154,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         globalIndex = indexPath.row;
         print("Selected Row: --> \(indexPath.row)");
         
-        let alertController = UIAlertController(title: "Note: \(note.notesList[indexPath.row].title)", message: "Prepare Segue Here for row: \(indexPath.row)", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Note: \(note.notesList[indexPath.row].title)", message: "Location: \(note.notesList[indexPath.row].geolocation) \n Date: \(note.notesList[indexPath.row].date) \n Image: \(note.notesList[indexPath.row].image)", preferredStyle: .Alert)
         
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)

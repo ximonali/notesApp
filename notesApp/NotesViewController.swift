@@ -251,15 +251,15 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //Search Bar
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
-        print("Get into Search Bar")
+        //print("Get into Search Bar")
         if(searchBar.text!.isEmpty) {
             self.searchActive = false
         } else {
             filteredTittle.removeAll(keepCapacity: false)
             for (var index=0; index < note.notesList.count; index++) {
                 let myTittle = note.notesList[index].title
-                //Here We MUST add the description FIELD
-                if(myTittle.lowercaseString.rangeOfString(searchText.lowercaseString) != nil ){
+                let myMessage = note.notesList[index].message
+                if(myTittle.lowercaseString.rangeOfString(searchText.lowercaseString) != nil || myMessage.lowercaseString.rangeOfString(searchText.lowercaseString) != nil ){
                     filteredTittle.append(note.notesList[index]);
                     self.searchActive = true
                 }
