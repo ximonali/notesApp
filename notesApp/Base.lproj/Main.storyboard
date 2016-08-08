@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Fsg-4h-TSt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Fsg-4h-TSt">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -202,8 +202,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWJ-4O-aE8">
                                 <rect key="frame" x="89" y="530" width="196" height="30"/>
-                                <color key="backgroundColor" red="0.1301826106" green="0.092470381099999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.97603723210000004" green="1" blue="0.9690740108" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="btnSave:" destination="Lia-cb-YFd" eventType="touchUpInside" id="qle-VY-wKd"/>
@@ -211,8 +210,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kDs-yw-lcm">
                                 <rect key="frame" x="59" y="461" width="96" height="30"/>
-                                <color key="backgroundColor" red="0.1301826106" green="0.092470381099999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.97603723210000004" green="1" blue="0.9690740108" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Take Picture"/>
                                 <connections>
                                     <action selector="btnAddPicture:" destination="Lia-cb-YFd" eventType="touchUpInside" id="uAi-8d-Gha"/>
@@ -255,8 +253,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUT-SX-8sw">
                                 <rect key="frame" x="232" y="461" width="103" height="30"/>
-                                <color key="backgroundColor" red="0.1301826106" green="0.092470381099999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.97603723210000004" green="1" blue="0.9690740108" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Select Picture"/>
                                 <connections>
                                     <action selector="btnAddPicture:" destination="Lia-cb-YFd" eventType="touchUpInside" id="Ndq-Ce-ciW"/>
