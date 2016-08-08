@@ -61,6 +61,10 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         return urls.first!.URLByAppendingPathComponent("data.archive")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.getNote()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -70,13 +74,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         MyTableVC.dataSource = self;
         
         
-        let fileURL = self.dataFileURL()
-        if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
-            let data = NSMutableData(contentsOfURL: fileURL)!
-            let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
-            note = unarchiver.decodeObjectForKey(rootKey) as! Note
-            unarchiver.finishDecoding()
-        }
+        self.getNote()
         
         let app = UIApplication.sharedApplication()
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -108,6 +106,32 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         print("------RESULT-----")
         dump(note.notesList)
         
+    }
+    
+    func updateNote()
+    {
+        let fileURL = self.dataFileURL()
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        archiver.encodeObject(note, forKey: rootKey)
+        archiver.finishEncoding()
+        data.writeToURL(fileURL, atomically: true)
+    }
+    
+    func getNote() {
+        let fileURL = self.dataFileURL()
+        if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
+            let data = NSMutableData(contentsOfURL: fileURL)!
+            let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+            note = unarchiver.decodeObjectForKey(rootKey) as! Note
+            unarchiver.finishDecoding()
+            self.MyTableVC.reloadData()
+            self.map.removeAnnotations(self.map.annotations)
+            for noteItem in note.notesList {
+                addMap(noteItem.geolocation)
+            }
+            
+        }
     }
     
     func applicationWillResignActive(notification:NSNotification) {
@@ -154,12 +178,22 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         globalIndex = indexPath.row;
         print("Selected Row: --> \(indexPath.row)");
         
-        let alertController = UIAlertController(title: "Note: \(note.notesList[indexPath.row].title)", message: "Location: \(note.notesList[indexPath.row].geolocation) \n Date: \(note.notesList[indexPath.row].date) \n Image: \(note.notesList[indexPath.row].image)", preferredStyle: .Alert)
+        //let alertController = UIAlertController(title: "Note: \(note.notesList[indexPath.row].title)", message: "Location: \(note.notesList[indexPath.row].geolocation) \n Date: \(note.notesList[indexPath.row].date) \n Image: \(note.notesList[indexPath.row].image)", preferredStyle: .Alert)
         
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
+        //let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        //alertController.addAction(defaultAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        //presentViewController(alertController, animated: true, completion: nil)
+        
+        let location = self.locations[indexPath.row]
+        
+        var region: MKCoordinateRegion = self.map.region
+        region.center.latitude = (location.coordinate.latitude)
+        region.center.longitude = (location.coordinate.longitude)
+        
+        region.span = MKCoordinateSpanMake(0.5, 0.5)
+        
+        self.map.setRegion(region, animated: true)
         
         //Here we need to send the Segue = go2details to NotesDetailViewController to show selected Note
         

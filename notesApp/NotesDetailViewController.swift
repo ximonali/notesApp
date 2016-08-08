@@ -24,11 +24,9 @@ UINavigationControllerDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var takePictureButton: UIButton!
     @IBOutlet weak var pickMyPicture: UIButton!
-
+    
+    @IBOutlet weak var txtLocation: UITextField!
     //@IBOutlet weak var lblDate: UILabel!
-
-    
-    
     @IBOutlet weak var txtTittle: UITextField!
     @IBOutlet weak var txtDescription: UITextView!
     
@@ -59,23 +57,32 @@ UINavigationControllerDelegate {
     
     
     @IBAction func btnSave(sender: UIButton) {
+        var compressedJPGImage = UIImage?()
+        
+        if (imageView.image != nil) {
+            let imageData = UIImageJPEGRepresentation(imageView.image!, 0.6)
+            compressedJPGImage = UIImage(data: imageData!)
+            UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
+        } else {
+            compressedJPGImage = nil
+        }
 
-        var imageData = UIImageJPEGRepresentation(imageView.image!, 0.6)
-        var compressedJPGImage = UIImage(data: imageData!)
-        UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
 
         if (self.globalIndex<0) {
-            let newNote = Note(title: txtTittle.text!, date: "07/08/2016", geolocation: "Toronto", image: "image", message: txtDescription.text!)
+            
+            let newNote = Note(id: note.notesList.count, title: txtTittle.text!, date: "07/08/2016", geolocation: "Toronto", image: compressedJPGImage, message: txtDescription.text!)
             note.notesList.append(newNote)
         } else {
             note.notesList[globalIndex].title = txtTittle.text!
             note.notesList[globalIndex].message = txtDescription.text!
+            note.notesList[globalIndex].image = imageView.image
         }
         
         let alertController = UIAlertController(title: txtTittle.text, message: "Your note was saved!", preferredStyle: .Alert)
         
         let actionYes = UIAlertAction(title: "Ok", style: .Default) { (action:UIAlertAction) in
             print("---After OK is Pressed---");
+            self.updateNote()
             self.navigationController?.popViewControllerAnimated(true)
         }
         
@@ -127,9 +134,11 @@ UINavigationControllerDelegate {
         if (globalIndex<0) {
             txtTittle.text = ""
             txtDescription.text = ""
+            txtLocation.text = ""
         } else {
             txtTittle.text = note.notesList[globalIndex].title
             txtDescription.text = note.notesList[globalIndex].message
+            imageView.image = note.notesList[globalIndex].image
         }
         
         // Check if my device has camera or not
@@ -142,14 +151,19 @@ UINavigationControllerDelegate {
     }
 
     func applicationWillResignActive(notification:NSNotification) {
+        updateNote()
+    }
+ 
+    func updateNote()
+    {
         let fileURL = self.dataFileURL()
         let data = NSMutableData()
         let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
         archiver.encodeObject(note, forKey: rootKey)
         archiver.finishEncoding()
         data.writeToURL(fileURL, atomically: true)
+        
     }
-    
 
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
         self.dismissViewControllerAnimated(true, completion:nil)

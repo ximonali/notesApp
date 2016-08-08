@@ -86,6 +86,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBAction func btnAdd(sender: UIBarButtonItem) {
         self.globalIndex = -1
+        updateNote()
         self.performSegueWithIdentifier("go2details", sender: self)
     }
     
@@ -95,28 +96,26 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return urls.first!.URLByAppendingPathComponent("data.archive")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        getNote()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //print ("NotesVC")
         
-        let fileURL = self.dataFileURL()
-        if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
-            let data = NSMutableData(contentsOfURL: fileURL)!
-            let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
-            note = unarchiver.decodeObjectForKey(rootKey) as! Note
-            unarchiver.finishDecoding()
-        }
+        getNote()
         
         let app = UIApplication.sharedApplication()
         NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: #selector(UIApplicationDelegate.applicationWillResignActive(_:)),
-            name: UIApplicationWillResignActiveNotification,
-            object: app)
+        selector: #selector(UIApplicationDelegate.applicationWillResignActive(_:)),
+        name: UIApplicationWillResignActiveNotification, object: app)
         
         if (note.notesList.count==0) {
-            let Note1 = Note(title: "First", date: "07/31/2016 09:00 AM", geolocation: "Ajax", image: "First", message: "Details Note 1 bla bla bla")
-            let Note2 = Note(title: "Second", date: "08/01/2016 10:00 AM", geolocation: "Toronto", image: "Second", message: "Details Note 2 yes yes yes")
-            let Note3 = Note(title: "Third", date: "07/30/2016 10:00 AM", geolocation: "Vaughan", image: "Third", message: "Details Note 3 no no no")
+            print("inserting data")
+            let Note1 = Note(id:0,title: "First", date: "07/31/2016", geolocation: "Ajax", image:nil, message: "Details Note 1 bla bla bla")
+            let Note2 = Note(id:1,title: "Second", date: "08/01/2016", geolocation: "Toronto", image: nil, message: "Details Note 2 yes yes yes")
+            let Note3 = Note(id:2,title: "Third", date: "07/30/2016", geolocation: "Vaughan", image: nil, message: "Details Note 3 no no no")
             note.notesList.append(Note1)
             note.notesList.append(Note2)
             note.notesList.append(Note3)
@@ -133,7 +132,23 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // Do any additional setup after loading the view.
     }
     
-    func applicationWillResignActive(notification:NSNotification) {
+    func getNote() {
+        let fileURL = self.dataFileURL()
+        if (NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!)) {
+            let data = NSMutableData(contentsOfURL: fileURL)!
+            let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+            note = unarchiver.decodeObjectForKey(rootKey) as! Note
+            unarchiver.finishDecoding()
+            self.MyTableVC.reloadData()
+        }
+    }
+    
+    func applicationWillResignActive(notification:NSNotification!) {
+        updateNote()
+    }
+    
+    func updateNote()
+    {
         let fileURL = self.dataFileURL()
         let data = NSMutableData()
         let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
@@ -146,6 +161,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
         if segue.identifier == "go2details"{
+            updateNote()
             let DetailsVC = segue.destinationViewController as! NotesDetailViewController
             DetailsVC.globalIndex = self.globalIndex
         }
@@ -199,6 +215,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         globalIndex = indexPath.row;
         print("Selected Row: --> \(globalIndex)");
+        updateNote()
         
         //Here we need to send the Segue = go2details to NotesDetailViewController to show selected Note
         self.performSegueWithIdentifier("go2details", sender: self)
@@ -209,7 +226,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            var delNote = note.notesList[indexPath.row]
+            let delNote = note.notesList[indexPath.row]
             
             let alertController = UIAlertController(title: delNote.title, message: "Would you like to delete actual note ?", preferredStyle: .Alert)
             
@@ -220,7 +237,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 //dump(self.note.notesList)
                 
                 self.note.notesList.removeAtIndex(indexPath.row)
-                
+                self.updateNote()
                 //print("----------AFTER-------------")
                 //dump(self.note.notesList)
                 
@@ -256,7 +273,7 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.searchActive = false
         } else {
             filteredTittle.removeAll(keepCapacity: false)
-            for (var index=0; index < note.notesList.count; index++) {
+            for (var index=0; index < note.notesList.count; index+=1) {
                 let myTittle = note.notesList[index].title
                 let myMessage = note.notesList[index].message
                 if(myTittle.lowercaseString.rangeOfString(searchText.lowercaseString) != nil || myMessage.lowercaseString.rangeOfString(searchText.lowercaseString) != nil ){

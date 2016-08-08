@@ -10,22 +10,19 @@ import UIKit
 
 class Note : NSObject, NSCoding, NSCopying{
     private static let notesKey = "notesKey"
+    var id: Int = 0
     var title: String = ""
     var date: String = ""
     var geolocation: String = ""
-    var image: String = ""
+    var image: UIImage?
     var message: String = ""
     var notesList = [Note]()
    
-    /*
-        Note(title: "First", date: "07/31/2016 09:00 AM", geolocation: "Ajax", image: "First", message: "Details Note 1 bla bla bla"),
-        Note(title: "Second", date: "08/01/2016 10:00 AM", geolocation: "Toronto", image: "Second", message: "Details Note 2 yes yes yes"),
-        Note(title: "Third", date: "07/30/2016 10:00 AM", geolocation: "Vaughan", image: "Third", message: "Details Note 3 no no no")
-    ]*/
     override init() {
     }
     
-    init(title:String, date:String, geolocation:String, image:String, message:String) {
+    init(id:Int, title:String, date:String, geolocation:String, image:UIImage?, message:String) {
+        self.id = id
         self.title = title
         self.date = date
         self.geolocation = geolocation
@@ -34,16 +31,18 @@ class Note : NSObject, NSCoding, NSCopying{
     }
     
     required init(coder decoder: NSCoder) {
+        id = decoder.decodeIntegerForKey("idKey")
         title = decoder.decodeObjectForKey("titleKey") as! String
         date = decoder.decodeObjectForKey("dateKey") as! String
         geolocation = decoder.decodeObjectForKey("geolocationKey") as! String
-        image = decoder.decodeObjectForKey("imageKey") as! String
+        image = decoder.decodeObjectForKey("imageKey") as? UIImage
         message = decoder.decodeObjectForKey("messageKey") as! String
         
         notesList = (decoder.decodeObjectForKey(Note.notesKey) as? [Note])!
     }
     
     func encodeWithCoder(coder: NSCoder) {
+        coder.encodeInt(32, forKey: "idKey")
         coder.encodeObject(title, forKey: "titleKey")
         coder.encodeObject(date, forKey: "dateKey")
         coder.encodeObject(geolocation, forKey: "geolocationKey")
