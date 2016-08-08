@@ -23,14 +23,11 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0la-HI-cAB">
-                                <rect key="frame" x="0.0" y="64" width="375" height="328"/>
-                            </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6Qa-m7-Jeg">
                                 <rect key="frame" x="0.0" y="390" width="375" height="236"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="yFe-Lc-dy0">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyCell" id="yFe-Lc-dy0" customClass="TableMapViewCell" customModule="notesApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yFe-Lc-dy0" id="QOC-34-ufe">
@@ -57,9 +54,16 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="locationNote" destination="wBv-Rh-JyU" id="PNB-b4-p93"/>
+                                            <outlet property="tittleNote" destination="PgG-xs-hGx" id="Me3-if-VLM"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0la-HI-cAB">
+                                <rect key="frame" x="0.0" y="64" width="375" height="318"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -67,6 +71,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Done" id="w3K-pN-i60"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="MyTableVC" destination="6Qa-m7-Jeg" id="ej0-Yc-sQ1"/>
                         <outlet property="map" destination="0la-HI-cAB" id="09j-g7-hHn"/>
                     </connections>
                 </viewController>
