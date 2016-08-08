@@ -24,11 +24,9 @@ UINavigationControllerDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var takePictureButton: UIButton!
     @IBOutlet weak var pickMyPicture: UIButton!
-
+    
+    @IBOutlet weak var txtLocation: UITextField!
     //@IBOutlet weak var lblDate: UILabel!
-
-    
-    
     @IBOutlet weak var txtTittle: UITextField!
     @IBOutlet weak var txtDescription: UITextView!
     
@@ -136,6 +134,7 @@ UINavigationControllerDelegate {
         if (globalIndex<0) {
             txtTittle.text = ""
             txtDescription.text = ""
+            txtLocation.text = ""
         } else {
             txtTittle.text = note.notesList[globalIndex].title
             txtDescription.text = note.notesList[globalIndex].message
